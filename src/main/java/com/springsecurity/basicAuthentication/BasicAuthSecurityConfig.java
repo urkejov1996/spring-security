@@ -1,6 +1,7 @@
 package com.springsecurity.basicAuthentication;
 
 import com.springsecurity.enums.RoleEnum;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Configuration
 public class BasicAuthSecurityConfig {
@@ -19,6 +21,7 @@ public class BasicAuthSecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(
                 auth -> {
+                    auth.requestMatchers(PathRequest.toH2Console()).permitAll();
                     auth.anyRequest().authenticated();
                 }
         );
